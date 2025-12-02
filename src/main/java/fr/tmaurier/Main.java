@@ -10,65 +10,49 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) throws IOException {
-
     System.out.println("--- Day 1: Safe Dial ---");
     day1();
+
     System.out.println("--- Day 2: Gift Shop ---");
     day2();
   }
 
   private static void day1() throws IOException {
-    List<String> instructions = readLinesFromResources();
-
+    List<String> instructions = readLinesFromResource("day1.txt");
     SafeDial dial = new SafeDial();
 
-    int part1 = dial.countZeros(instructions, 50);
-    int part2 = dial.countZerosAllClicks(instructions, 50);
-
-    System.out.println("Day 1 - Part 1 answer: " + part1);
-    System.out.println("Day 1 - Part 2 answer: " + part2);
+    System.out.println("Day 1 - Part 1 answer: " + dial.countZeros(instructions, 50));
+    System.out.println("Day 1 - Part 2 answer: " + dial.countZerosAllClicks(instructions, 50));
   }
 
-  private static List<String> readLinesFromResources() throws IOException {
-    ClassLoader cl = Main.class.getClassLoader();
-    InputStream in = cl.getResourceAsStream("day1.txt");
+  private static void day2() throws IOException {
+    String line = readSingleLineFromResource("day2.txt");
+    GiftShop service = new GiftShop();
+    List<GiftShop.Range> ranges = service.parseRanges(line);
 
-    if (in == null) {
-      throw new IllegalArgumentException("Resource not found: day1.txt");
-    }
+    System.out.println("Day 2 - Part 1 answer: " + service.sumInvalidIdsOverRanges(ranges));
+    System.out.println("Day 2 - Part 2 answer: " + service.sumInvalidIdsOverRangesPart2(ranges));
+  }
 
-    try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
+  private static List<String> readLinesFromResource(String resourceName) throws IOException {
+    try (BufferedReader br =
+        new BufferedReader(new InputStreamReader(getResourceAsStream(resourceName)))) {
       return br.lines().map(String::trim).filter(s -> !s.isEmpty()).toList();
     }
   }
 
-  private static void day2() throws IOException {
-    String line = readSingleLineFromResources();
-
-    GiftShop service = new GiftShop();
-    List<GiftShop.Range> ranges = service.parseRanges(line);
-
-    long answer = service.sumInvalidIdsOverRanges(ranges);
-    long answerPart2 = service.sumInvalidIdsOverRangesPart2(ranges);
-
-    System.out.println("Day 2 - Part 1 answer: " + answer);
-    System.out.println("Day 2 - Part 2 answer: " + answerPart2);
-  }
-
-  private static String readSingleLineFromResources() throws IOException {
-    ClassLoader cl = Main.class.getClassLoader();
-    InputStream in = cl.getResourceAsStream("day2.txt");
-
-    if (in == null) {
-      throw new IllegalArgumentException("Resource non trouvée : " + "day2.txt");
-    }
-
-    try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
+  private static String readSingleLineFromResource(String resourceName) throws IOException {
+    try (BufferedReader br =
+        new BufferedReader(new InputStreamReader(getResourceAsStream(resourceName)))) {
       String line = br.readLine();
-      if (line == null) {
-        throw new IllegalStateException("Fichier vide : " + "day2.txt");
-      }
+      if (line == null) throw new IllegalStateException("Fichier vide : " + resourceName);
       return line.trim();
     }
+  }
+
+  private static InputStream getResourceAsStream(String resourceName) {
+    InputStream in = Main.class.getClassLoader().getResourceAsStream(resourceName);
+    if (in == null) throw new IllegalArgumentException("Ressource non trouvée : " + resourceName);
+    return in;
   }
 }
