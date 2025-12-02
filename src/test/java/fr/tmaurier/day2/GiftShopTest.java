@@ -63,4 +63,28 @@ class GiftShopTest {
 
     assertThat(sum).isEqualTo(1227775554L);
   }
+
+  @Test
+  void isInvalidIdPart2_should_detect_repeated_sequences_even_with_leading_zeros() {
+    assertThat(giftShop.isInvalidIdPart2(12341234)).isTrue();
+    assertThat(giftShop.isInvalidIdPart2(123123123)).isTrue();
+    assertThat(giftShop.isInvalidIdPart2(1212121212L)).isTrue();
+    assertThat(giftShop.isInvalidIdPart2(1111111)).isTrue();
+  }
+
+  @Test
+  void isInvalidIdPart2_should_reject_non_repeated_or_odd_length() {
+    assertThat(giftShop.isInvalidIdPart2(101)).isFalse();
+    assertThat(giftShop.isInvalidIdPart2(12345)).isFalse();
+    assertThat(giftShop.isInvalidIdPart2(1231231)).isFalse();
+    assertThat(giftShop.isInvalidIdPart2(7)).isFalse();
+  }
+
+  @Test
+  void isInvalidIdPart2_should_detect_repeated_sequences_with_leading_zeros() {
+    assertThat(giftShop.isInvalidIdPart2(11)).isTrue();
+    assertThat(giftShop.isInvalidIdPart2(22)).isTrue();
+    assertThat(giftShop.isInvalidIdPart2(6464)).isTrue();
+    assertThat(giftShop.isInvalidIdPart2(123123)).isTrue();
+  }
 }

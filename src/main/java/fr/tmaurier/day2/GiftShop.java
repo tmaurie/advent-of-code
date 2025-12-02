@@ -51,5 +51,43 @@ public class GiftShop {
     return sum;
   }
 
+  public long sumInvalidIdsOverRangesPart2(List<Range> ranges) {
+    long sum = 0L;
+    for (Range r : ranges) {
+      sum += sumInvalidIdsInRangePart2(r.start, r.end);
+    }
+    return sum;
+  }
+
+  public long sumInvalidIdsInRangePart2(long start, long end) {
+    long sum = 0L;
+    for (long id = start; id <= end; id++) {
+      if (isInvalidIdPart2(id)) {
+        sum += id;
+      }
+    }
+    return sum;
+  }
+
+  public boolean isInvalidIdPart2(long id) {
+    String s = Long.toString(id);
+    int n = s.length();
+
+    for (int k = 1; k <= n / 2; k++) {
+      if (n % k != 0) continue;
+
+      String chunk = s.substring(0, k);
+      int repetitions = n / k;
+
+      StringBuilder sb = new StringBuilder(n);
+      sb.append(chunk.repeat(repetitions));
+
+      if (sb.toString().equals(s)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public record Range(long start, long end) {}
 }

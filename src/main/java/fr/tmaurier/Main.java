@@ -25,8 +25,8 @@ public class Main {
     int part1 = dial.countZeros(instructions, 50);
     int part2 = dial.countZerosAllClicks(instructions, 50);
 
-    System.out.println("Part 1 (final positions only) : " + part1);
-    System.out.println("Part 2 (all clicks)           : " + part2);
+    System.out.println("Day 1 - Part 1 answer: " + part1);
+    System.out.println("Day 1 - Part 2 answer: " + part2);
   }
 
   private static List<String> readLinesFromResources() throws IOException {
@@ -49,8 +49,10 @@ public class Main {
     List<GiftShop.Range> ranges = service.parseRanges(line);
 
     long answer = service.sumInvalidIdsOverRanges(ranges);
+    long answerPart2 = service.sumInvalidIdsOverRangesPart2(ranges);
 
     System.out.println("Day 2 - Part 1 answer: " + answer);
+    System.out.println("Day 2 - Part 2 answer: " + answerPart2);
   }
 
   private static String readSingleLineFromResources() throws IOException {
@@ -62,7 +64,6 @@ public class Main {
     }
 
     try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
-      // On suppose une seule ligne dans l'day1.txt AoC
       String line = br.readLine();
       if (line == null) {
         throw new IllegalStateException("Fichier vide : " + "day2.txt");
