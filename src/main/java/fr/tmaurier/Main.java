@@ -2,6 +2,7 @@ package fr.tmaurier;
 
 import fr.tmaurier.day1.SafeDial;
 import fr.tmaurier.day2.GiftShop;
+import fr.tmaurier.day3.BatteryBanks;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,9 @@ public class Main {
 
     System.out.println("--- Day 2: Gift Shop ---");
     day2();
+
+    System.out.println("--- Day 3: Battery Banks ---");
+    day3();
   }
 
   private static void day1() throws IOException {
@@ -32,6 +36,14 @@ public class Main {
 
     System.out.println("Day 2 - Part 1 answer: " + service.sumInvalidIdsOverRanges(ranges));
     System.out.println("Day 2 - Part 2 answer: " + service.sumInvalidIdsOverRangesPart2(ranges));
+  }
+
+  private static void day3() throws IOException {
+    List<String> banks = readLinesFromResource("day3.txt");
+    BatteryBanks service = new BatteryBanks();
+    long total = service.totalMaxJoltage(banks);
+
+    System.out.println("Day 3 - Part 1 answer: " + total);
   }
 
   private static List<String> readLinesFromResource(String resourceName) throws IOException {
