@@ -41,9 +41,11 @@ public class Main {
   private static void day3() throws IOException {
     List<String> banks = readLinesFromResource("day3.txt");
     BatteryBanks service = new BatteryBanks();
-    long total = service.totalMaxJoltage(banks);
+    long total1 = service.totalMaxJoltage(banks, 2);
+    long total2 = service.totalMaxJoltage(banks, 12);
 
-    System.out.println("Day 3 - Part 1 answer: " + total);
+    System.out.println("Day 3 - Part 1 answer: " + total1);
+    System.out.println("Day 3 - Part 2 answer: " + total2);
   }
 
   private static List<String> readLinesFromResource(String resourceName) throws IOException {

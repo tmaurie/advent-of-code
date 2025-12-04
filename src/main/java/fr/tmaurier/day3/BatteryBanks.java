@@ -4,30 +4,31 @@ import java.util.List;
 
 public class BatteryBanks {
 
-  public int maxJoltageForBank(String line) {
-    if (line.length() < 2) {
-      throw new IllegalArgumentException("Bank must contain at least 2 batteries");
+  public long maxJoltageForBank(String line, int k) {
+    int n = line.length();
+    int toRemove = n - k;
+
+    StringBuilder sb = new StringBuilder(n);
+
+    for (int i = 0; i < n; i++) {
+      char d = line.charAt(i);
+
+      while (!sb.isEmpty() && toRemove > 0 && sb.charAt(sb.length() - 1) < d) {
+        sb.setLength(sb.length() - 1); // pop
+        toRemove--;
+      }
+
+      sb.append(d);
     }
 
-    int bestFirstDigit = -1;
-    int best = -1;
-
-    for (int j = 1; j < line.length(); j++) {
-      int prevDigit = line.charAt(j - 1) - '0';
-      if (prevDigit > bestFirstDigit) {
-        bestFirstDigit = prevDigit;
-      }
-      int currentDigit = line.charAt(j) - '0';
-      int value = bestFirstDigit * 10 + currentDigit;
-      if (value > best) {
-        best = value;
-      }
+    if (sb.length() > k) {
+      sb.setLength(k);
     }
 
-    return best;
+    return Long.parseLong(sb.toString());
   }
 
-  public long totalMaxJoltage(List<String> banks) {
-    return banks.stream().mapToLong(this::maxJoltageForBank).sum();
+  public long totalMaxJoltage(List<String> banks, int k) {
+    return banks.stream().mapToLong(bank -> maxJoltageForBank(bank, k)).sum();
   }
 }
