@@ -3,6 +3,7 @@ package fr.tmaurier;
 import fr.tmaurier.day1.SafeDial;
 import fr.tmaurier.day2.GiftShop;
 import fr.tmaurier.day3.BatteryBanks;
+import fr.tmaurier.day4.PaperRolls;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +20,9 @@ public class Main {
 
     System.out.println("--- Day 3: Battery Banks ---");
     day3();
+
+    System.out.println("--- Day 4: Paper Rolls ---");
+    day4();
   }
 
   private static void day1() throws IOException {
@@ -46,6 +50,16 @@ public class Main {
 
     System.out.println("Day 3 - Part 1 answer: " + total1);
     System.out.println("Day 3 - Part 2 answer: " + total2);
+  }
+
+  private static void day4() throws IOException {
+    List<String> grid = readLinesFromResource("day4.txt");
+    PaperRolls rolls = new PaperRolls();
+    int accessibleCount = rolls.countAccessibleRolls(grid);
+    int removableCount = rolls.countRemovableRolls(grid);
+
+    System.out.println("Day 4 - Part 1 answer: " + accessibleCount);
+    System.out.println("Day 4 - Part 2 answer: " + removableCount);
   }
 
   private static List<String> readLinesFromResource(String resourceName) throws IOException {
