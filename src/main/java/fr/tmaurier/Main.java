@@ -4,10 +4,12 @@ import fr.tmaurier.day1.SafeDial;
 import fr.tmaurier.day2.GiftShop;
 import fr.tmaurier.day3.BatteryBanks;
 import fr.tmaurier.day4.PaperRolls;
+import fr.tmaurier.day5.IngredientInventory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -23,6 +25,9 @@ public class Main {
 
     System.out.println("--- Day 4: Paper Rolls ---");
     day4();
+
+    System.out.println("--- Day 5: Ingredient Inventory ---");
+    day5();
   }
 
   private static void day1() throws IOException {
@@ -62,6 +67,37 @@ public class Main {
     System.out.println("Day 4 - Part 2 answer: " + removableCount);
   }
 
+  private static void day5() throws IOException {
+    List<String> allLines = readLinesFromResources("day5.txt");
+
+    List<String> rangeLines = new ArrayList<>();
+    List<String> idLines = new ArrayList<>();
+
+    boolean afterBlank = false;
+    for (String line : allLines) {
+      if (!afterBlank && line.isBlank()) {
+        afterBlank = true;
+        continue;
+      }
+      if (!afterBlank) {
+        rangeLines.add(line);
+      } else {
+        idLines.add(line);
+      }
+    }
+
+    IngredientInventory inv = new IngredientInventory();
+
+    var ranges = inv.parseRanges(rangeLines);
+    var ids = inv.parseIds(idLines);
+
+    long freshCount = inv.countFresh(ranges, ids);
+    long totalFreshIds = inv.countFreshIdsInRanges(ranges);
+
+    System.out.println("Day 5 - Part 1 answer: " + freshCount);
+    System.out.println("Day 5 - Part 2 answer: " + totalFreshIds);
+  }
+
   private static List<String> readLinesFromResource(String resourceName) throws IOException {
     try (BufferedReader br =
         new BufferedReader(new InputStreamReader(getResourceAsStream(resourceName)))) {
@@ -75,6 +111,19 @@ public class Main {
       String line = br.readLine();
       if (line == null) throw new IllegalStateException("Fichier vide : " + resourceName);
       return line.trim();
+    }
+  }
+
+  private static List<String> readLinesFromResources(String resourceName) throws IOException {
+    ClassLoader cl = Main.class.getClassLoader();
+    InputStream in = cl.getResourceAsStream(resourceName);
+
+    if (in == null) {
+      throw new IllegalArgumentException("Resource not found: " + resourceName);
+    }
+
+    try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
+      return br.lines().toList();
     }
   }
 
