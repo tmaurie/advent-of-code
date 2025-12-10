@@ -5,6 +5,7 @@ import fr.tmaurier.day2.GiftShop;
 import fr.tmaurier.day3.BatteryBanks;
 import fr.tmaurier.day4.PaperRolls;
 import fr.tmaurier.day5.IngredientInventory;
+import fr.tmaurier.day6.TrashCompactor;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,9 @@ public class Main {
 
     System.out.println("--- Day 5: Ingredient Inventory ---");
     day5();
+
+    System.out.println("--- Day 6: Trash Compactor ---");
+    day6();
   }
 
   private static void day1() throws IOException {
@@ -93,5 +97,16 @@ public class Main {
 
     System.out.println("Day 5 - Part 1 answer: " + freshCount);
     System.out.println("Day 5 - Part 2 answer: " + totalFreshIds);
+  }
+
+  private static void day6() throws IOException {
+    List<String> allLines = ResourceReader.readAllLines("day6.txt");
+
+    TrashCompactor trash = new TrashCompactor();
+    long total = trash.solveWorksheet(allLines);
+    long totalPartTwo = trash.solveWorksheetRightToLeft(allLines);
+
+    System.out.println("Day 6 - Part 1: grand total = " + total);
+    System.out.println("Day 6 - Part 2: grand total = " + totalPartTwo);
   }
 }
